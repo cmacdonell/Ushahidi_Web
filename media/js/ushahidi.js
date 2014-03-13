@@ -504,7 +504,25 @@
 				});
 
 				// Add features to the vector layer
-				makers.addFeatures(new OpenLayers.Feature.Vector(this._olMap.getCenter()));
+
+				epsg4326 =  new OpenLayers.Projection("EPSG:4326"); //WGS 1984 projection
+				projectTo = this._olMap.getProjectionObject(); //The map projection (Spherical Mercator)
+				var lonLat = new OpenLayers.LonLat( -0.1279688 ,51.5077286 ).transform(epsg4326,     projectTo)
+				var zoom=6;
+				this._olMap.setCenter (lonLat, zoom);
+
+				//markers.addFeatures(new OpenLayers.Feature.Vector(this._olMap.getCenter()));
+				//lonLat = this._olMap.getCenter();
+				var point = new OpenLayers.Geometry.Point(lonLat.lon, lonLat.lat);
+				var mycircle = OpenLayers.Geometry.Polygon.createRegularPolygon
+				(
+				    point,
+				    50000,
+				    40,
+				    0);
+
+				var featurecircle = new OpenLayers.Feature.Vector(mycircle);
+				markers.addFeatures([featurecircle]);
 
 			} else {
 				markers = new OpenLayers.Layer.Markers("default");

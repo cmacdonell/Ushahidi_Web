@@ -211,6 +211,21 @@ jQuery(function() {
 		transform: false
 	}, true, true);
 
+    var camStyle = new OpenLayers.Style({
+		pointRadius: 5,
+		fillColor: "#00AAAA",
+		strokeColor: "#FFFFFF",
+		fillOpacity: "0.75",
+		strokeOpacity: 0.75,
+		strokeWidth: 1.5
+	});
+
+	var camStyleMap = new OpenLayers.StyleMap({
+		default: camStyle
+	});
+
+
+    map.addLayer(Ushahidi.DEFAULT, {name: "blah", styleMap: camStyleMap}, true, true);
 
 	// Register the referesh timeline function as a callback
 	map.register("filterschanged", refreshTimeline);
